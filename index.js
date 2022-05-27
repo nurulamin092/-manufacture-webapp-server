@@ -36,6 +36,10 @@ async function run() {
         const productsCollection = client.db('bicycle_manufacture').collection('products');
         const userCollection = client.db('bicycle_manufacture').collection('users');
 
+        app.get('/user', verifyJWT, async (req, res) => {
+            const users = await userCollection.find().toArray();
+            res.send(users);
+        })
         app.get('/product', async (req, res) => {
             const query = {};
             const products = await productsCollection.find(query).toArray();
