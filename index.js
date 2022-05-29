@@ -34,6 +34,7 @@ async function run() {
         await client.connect();
         const productsCollection = client.db('bicycle_manufacture').collection('products');
         const userCollection = client.db('bicycle_manufacture').collection('users');
+        const orderCollection = client.db('bicycle_manufacture').collection('orders');
 
         const verifyAdmin = async (req, res, next) => {
             const requester = req.decoded.email;
@@ -103,6 +104,12 @@ async function run() {
             const result = await productsCollection.deleteOne(query);
             res.send(result);
         });
+
+        app.post('/orders', async (req, res) => {
+            const order = req.body;
+            const result = await orderCollection.insertOne(order);
+            return res.send(result);
+        })
     }
     finally {
 
