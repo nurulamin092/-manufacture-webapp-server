@@ -130,6 +130,12 @@ async function run() {
             return res.send(result);
         });
 
+        app.get('/review', async (req, res) => {
+            const query = {};
+            const reviews = await reviewCollection.find(query).toArray();
+            res.send(reviews)
+        });
+
         app.post('/review', async (req, res) => {
             const addReview = req.body;
             const result = await reviewCollection.insertOne(addReview);
