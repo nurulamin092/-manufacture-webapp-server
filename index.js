@@ -35,6 +35,7 @@ async function run() {
         const productsCollection = client.db('bicycle_manufacture').collection('products');
         const userCollection = client.db('bicycle_manufacture').collection('users');
         const orderCollection = client.db('bicycle_manufacture').collection('orders');
+        const reviewCollection = client.db('bicycle_manufacture').collection('reviews');
 
         const verifyAdmin = async (req, res, next) => {
             const requester = req.decoded.email;
@@ -111,12 +112,6 @@ async function run() {
             res.send(result);
         });
 
-        /* app.get('/order', verifyJWT, async (req, res) => {
-            const customerEmail = req.query.customerEmail;
-            const query = { customerEmail: customerEmail }
-            const orders = await orderCollection.find(query).toArray();
-            res.send(orders)
-        }); */
         app.get('/order', verifyJWT, async (req, res) => {
             const customerEmail = req.query.customerEmail;
             const decodedEmail = req.decoded.email;
@@ -133,6 +128,12 @@ async function run() {
             const order = req.body;
             const result = await orderCollection.insertOne(order);
             return res.send(result);
+        });
+
+        app.post('/review', async (req, res) => {
+            const addReview = req.body;
+            const result = await reviewCollection.insertOne(addReview);
+            res.send(result);
         });
 
 
