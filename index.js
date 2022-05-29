@@ -111,11 +111,19 @@ async function run() {
             res.send(result);
         });
 
+        app.get('/order', async (req, res) => {
+            const customerEmail = req.query.customerEmail;
+            const query = { customerEmail: customerEmail }
+            const orders = await orderCollection.find(query).toArray();
+            res.send(orders)
+        });
         app.post('/orders', async (req, res) => {
             const order = req.body;
             const result = await orderCollection.insertOne(order);
             return res.send(result);
-        })
+        });
+
+
     }
     finally {
 
