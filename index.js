@@ -111,11 +111,23 @@ async function run() {
             res.send(result);
         });
 
-        app.get('/order', async (req, res) => {
+        /* app.get('/order', verifyJWT, async (req, res) => {
             const customerEmail = req.query.customerEmail;
             const query = { customerEmail: customerEmail }
             const orders = await orderCollection.find(query).toArray();
             res.send(orders)
+        }); */
+        app.get('/order', verifyJWT, async (req, res) => {
+            const customerEmail = req.query.customerEmail;
+            const decodedEmail = req.decoded.email;
+            if (decodedEmail) {
+                const query = { customerEmail: customerEmail }
+                const orders = await orderCollection.find(query).toArray();
+                res.send(orders)
+            }
+            else {
+                return res.status(403).send({ message: 'forbidden access' })
+            }
         });
         app.post('/orders', async (req, res) => {
             const order = req.body;
