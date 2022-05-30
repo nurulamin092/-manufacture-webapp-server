@@ -137,6 +137,12 @@ async function run() {
             }
         });
 
+        app.get('/allOrder', verifyJWT, verifyAdmin, async (req, res) => {
+            const query = {};
+            const orders = await orderCollection.find(query).toArray();
+            res.send(orders);
+        })
+
         app.get('/order/:id', verifyJWT, async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) };
