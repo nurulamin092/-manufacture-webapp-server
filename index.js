@@ -192,9 +192,9 @@ run().catch(console.dir);
 
 
 app.get('/', (req, res) => {
-    res.send('Hello Bicycle manufacture!')
+    res.send('Hello Bicycle manufacture Server!')
 })
 
 app.listen(port, () => {
-    console.log(`Bicycle Manufacture App listening on port ${port}`)
+    console.log(`Bicycle Manufacture Server App listening on port ${port}`)
 })
